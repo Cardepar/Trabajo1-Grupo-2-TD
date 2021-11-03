@@ -5,7 +5,7 @@ Este será nuestro repositorio para el trabajo de TD que tenemos que entregar ha
 
 # La lista de componentes del grupo
 
-- Carlos De Castilla Parrilla (Responsable)
+- Carlos De Castilla Parrilla (Responsble)
 - Tamara Carmona Naranjo
 - Carlos Fernando Moreno León
 -
