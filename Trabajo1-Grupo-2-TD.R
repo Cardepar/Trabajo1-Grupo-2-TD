@@ -8,8 +8,9 @@
 # - Carlos Fernando Moreno León
 # -
 # -
-  
-  
+
+library(dplyr)
+
 # Funciones Auxiliares
 
 crea.tablaX = function(vector_matporfilas,numalternativas=3,numestados=4) {
@@ -152,6 +153,12 @@ intervalos.alfa= function(tablaX,p,favorable=TRUE) {
   resultados$AlternativaOptima = unlist(Alt_Hurwicz);
   resultados$Solucion = unlist(Alt_Hurwicz);
   names(resultados$Solucion)=alfa;
+  # distinct(as.data.frame(resultados,alfa));
+  prueba=cbind.data.frame(alfa,resultados$Solucion[1:length(alfa)]);
+  colnames(prueba)<-c("Alfa", "Solución");
+  rownames(prueba %>% distinct(Solución));
+  alternativas= prueba %>% distinct(Solución);
+  resultados$alternativas = alternativas
   return(resultados)
 }
 
@@ -163,7 +170,7 @@ datos=c(2160,360,
         3480,480)
 matriz=crea.tablaX(datos,3,2)
 
-intervalos.alfa(matriz,0.1,T)
+intervalos.alfa(matriz,0.01,T)
 dibuja.criterio.Hurwicz(matriz,T) # Comprobamos.
 
 # Ejemplo (desfavorable):
