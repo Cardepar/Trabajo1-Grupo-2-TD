@@ -158,7 +158,7 @@ intervalos.alfa= function(tablaX,p,favorable=TRUE) {
   colnames(prueba)<-c("Alfa", "Solución");
   rownames(prueba %>% distinct(Solución));
   alternativas= prueba %>% distinct(Solución);
-  resultados$alternativas = alternativas
+  resultados$intervalos = alternativas
   return(resultados)
 }
 
@@ -181,5 +181,6 @@ datos=c(2160,360,
 matriz=crea.tablaX(datos,3,2)
 
 intervalos.alfa(matriz,0.1,FALSE)
+# Valores de Alfa a partir de los cuales cambiamos de alternativa.
 dibuja.criterio.Hurwicz(matriz,FALSE) # Comprobamos.
 
