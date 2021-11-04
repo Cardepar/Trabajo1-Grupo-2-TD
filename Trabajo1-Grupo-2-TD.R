@@ -214,6 +214,11 @@ matriz=crea.tablaX(datos,4,5)
 
 intervalos.alfa(matriz,0.01,T)
 # Valores de Alfa a partir de los cuales cambiamos de alternativa.
+# El Alfa mide nuestra valentía siendo 0 muy pesimista y 1 muy optimista.
+# Si nuestro alfa va de [0,0.01) la mejor alternativa es el Bingo.
+# Si nuestro alfa está entre [0.01,0.44) lo mejor es jugar al Blackjack.
+# Si nuestro alfa va de [0.44,0.52) la mejor decisión es jugar al Póker.
+# Y si nuestro alfa va de [0.52,1] el mejor plan es jugar a la Ruleta.
 dibuja.criterio.Hurwicz(matriz,T) # Comprobamos.
 
 
