@@ -171,6 +171,7 @@ datos=c(2160,360,
 matriz=crea.tablaX(datos,3,2)
 
 intervalos.alfa(matriz,0.01,T)
+# Valores de Alfa a partir de los cuales cambiamos de alternativa.
 dibuja.criterio.Hurwicz(matriz,T) # Comprobamos.
 
 # Ejemplo (desfavorable):
@@ -183,4 +184,37 @@ matriz=crea.tablaX(datos,3,2)
 intervalos.alfa(matriz,0.1,FALSE)
 # Valores de Alfa a partir de los cuales cambiamos de alternativa.
 dibuja.criterio.Hurwicz(matriz,FALSE) # Comprobamos.
+
+
+
+
+
+
+
+# Ejercicio de Carlos De Castilla
+
+# Unos amigos quieren pasar la noche en el casino y jugarse parte de sus
+# ahorros en alguno de los distintos juegos que se ofrecen en las mesas
+# del salón quieren decidir en cuál es mejor jugar. 
+# Los distintos juegos son: El Bingo, El Blackjack, El Póker y La Ruleta.
+# En cada juego (alternativa) existen 5 estados de la naturaleza:
+# Muy mala suerte, Mala suerte, Suerte neutra, Buena suerte y Muy buena suerte.
+# A continuación represento la tabla de valores (ganancias en €):
+# Juego: (Suerte) // Muy mala // Mala // Neutra // Buena // Muy Buena //    
+# Bingo:          //   -40    // -30  //   -10  //   10  //     30    //
+# Blackjack:      //   -40    // -20  //   -10  //   20  //     40    //
+# Póker:          //   -120   // -60  //   -30  //   50  //     150   //
+# Ruleta:         //   -140   // -90  //   -10  //   60  //     170   //
+
+datos=c(-40,-30,-10,10,30,
+        -40,-20,-10,20,40,
+        -120,-60,-30,50,150,
+        -140,-90,-10,60,170)
+matriz=crea.tablaX(datos,4,5)
+
+intervalos.alfa(matriz,0.01,T)
+# Valores de Alfa a partir de los cuales cambiamos de alternativa.
+dibuja.criterio.Hurwicz(matriz,T) # Comprobamos.
+
+
 
