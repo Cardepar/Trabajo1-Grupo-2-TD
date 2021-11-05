@@ -212,7 +212,7 @@ Obtenemos los siguientes valores de Alfa a partir de los cuales cambiamos de alt
 
 -Si el alfa está pertenece a [0.33,0.42) lo mejor sería construir un almacén de tamaño mediano.
 
--Por último, si nuestro alfa [0.44,0.52) la mejor decisión será la de un almacén grande.
+-Por último, si nuestro alfa [0.42,1] la mejor decisión será la de un almacén grande.
 
 Lo podemos comprobar realizando una [representación]{.ul} gráfica mediante la función ***dibuja.criterio.Hurwicz*** de la librería "*teoriadecision_funciones_incertidumbre*":
 
