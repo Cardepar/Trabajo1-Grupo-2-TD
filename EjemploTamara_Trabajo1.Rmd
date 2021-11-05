@@ -1,0 +1,173 @@
+---
+title: "Ejemplo Tamara Carmona"
+author: "Tamara Carmona"
+date: "5/11/2021"
+output: html_document
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+source("teoriadecision_funciones_incertidumbre.R")
+library(dplyr)
+
+```
+
+# Ejemplo de Tamara Carmona Naranjo
+
+## Enunciado
+
+Lucas ha entrado en el Grado de Ciencias del Deporte, pero no sabe en
+qué universidad matricularse. Entre sus opciones está:
+
+-   La Universidad de Sevilla, donde el precio de la matrícula serían
+    1200€, el precio medio de alquiler mensual es de 2000€ y el
+    transporte hasta Sevilla 100€.
+
+-   La Universidad de Córdoba, donde el precio de la matrícula serían
+    1800€, el precio medio de alquiler mensual es de 500€ y el
+    transporte hasta Córdoba 500€.
+
+-   La Universidad de Cádiz, donde el precio de la matrícula serían
+    2500€, el precio medio de alquiler mensual es de 150€ y el
+    transporte hasta Cádiz 25€.
+
+¿Qué universidad le recomienda usted, si su objetivo es minimizar los
+costes?
+
+## Planteamiento
+
+-   Modelo de costes (Desfavorable)
+
+-   Alternativas: -d1= "Universidad de Sevilla" -d2= "Universidad de
+    Córdoba" -d3= "Universidad de Cádiz"
+
+-   Estados de la naturaleza: -e1= "Matrícula" -e2= "Transporte" -e3=
+    "Alquiler"
+
+-   Obtenemos la siguiente tabla:
+
+    |     *Alt\\\\ Estados*      | Matrícula | Transporte | Alquiler |
+    |:--------------------------:|:---------:|:----------:|:--------:|
+    | **Universidad de Sevilla** |   1200€   |    100€    |  2000€   |
+    | **Universidad de Córdoba** |   1800€   |    500€    |   500€   |
+    |  **Universidad de Cádiz**  |   2500€   |    25€     |   150€   |
+
+### Añadimos los datos
+
+```{r}
+datos=c(1200,100,2000,
+        1800, 500, 500,
+        2500, 25,150)
+datos
+matriz=crea.tablaX(datos,3,3)
+matriz
+```
+
+Vamos a resolver el problema usando todos los métodos de incertidumbre,
+y luego con la función creada por el grupo para este trabajo
+
+### Resolvemos para todos los métodos
+
+```{r}
+TodosCriterios=criterio.Todos(matriz,0.3, favorable = FALSE)
+TodosCriterios
+```
+
+Obtenemos: -Para el criterio de Wald, Hurwicz, Savage y para el Punto
+Ideal la mejor alternativa es la Universidad de Córdoba . -Para el
+criterio Optimista y el de Laplace la mejor alternativa es la
+Universidad de Cádiz.
+
+### Resolvemos con la función creada por el grupo
+
+Está función se ha creado para que nos devuelva cuáles son las mejores
+alternativas en función de los valores de alpha. El criterio usado es el
+criterio de Hurwicz
+
+```{r}
+intervalos.alfa= function(tablaX,favorable=TRUE) {
+  
+  alfa=seq(0,1,by=0.01) # Introducimos un conjunto de alfas que nos servirán
+  # para saber cuándo cambia la alternativa óptima. Fijamos un valor de 0.01,
+  # el cual indica cada cuánto se quiere que exista alfa.
+  X = tablaX
+  
+  if(favorable){ #en el caso de que sea favorable
+    Altmin = apply(X,MARGIN=1,min)
+    Altmax= apply(X,MARGIN=1,max)
+    
+    # Como ya no tenemos un alfa, sino varios, debemos crear un bucle que
+    # trabaje con todos los alfa. Como, además, Altmin y Altmax son vecto-
+    # res, tenemos que crear listas que nos devuelvan, para cada elemento
+    # de dichos vectores, cuáles son las alternativas asociadas a los
+    # alfas.
+    
+    AltH=list()
+    Hurwicz=list()
+    Alt_Hurwicz=list()
+    
+    # Creamos el bucle:
+    
+    for(i in 1:length(alfa)){
+      AltH[[i]] = alfa[i] * Altmax + (1-alfa[i]) * Altmin
+      Hurwicz[[i]] = max(AltH[[i]])
+      Alt_Hurwicz[[i]] = which.max.general(AltH[[i]])
+    }
+    
+    metodo = 'favorable'
+    
+  } else { #en caso de que no sea favorable
+    Altmin = apply(X,MARGIN=1,min)
+    Altmax= apply(X,MARGIN=1,max)
+    
+    AltH=list()
+    Hurwicz=list()
+    Alt_Hurwicz=list()
+    
+    for(i in 1:length(alfa)){
+      AltH[[i]] = (1-alfa[i]) * Altmax + alfa[i] * Altmin 
+      Hurwicz[[i]] = min(AltH[[i]])
+      Alt_Hurwicz[[i]] = which.min.general(AltH[[i]])
+    }
+    
+    metodo = 'desfavorable'
+    
+  }
+  
+  resultados = list();
+  resultados$metodo = metodo;
+  resultados$ValorAlternativa = unlist(Hurwicz); # Valores que toma cada
+  # alfa en su alternativa óptima.
+  resultados$alfa = alfa; # Alfas usados.
+  resultados$AlternativaOptima = unlist(Alt_Hurwicz);
+  resultados$Solucion = unlist(Alt_Hurwicz);
+  names(resultados$Solucion)=alfa;
+  # distinct(as.data.frame(resultados,alfa));
+  prueba=cbind.data.frame(alfa,resultados$Solucion[1:length(alfa)]);
+  colnames(prueba)<-c("Alfa", "Solución");
+  rownames(prueba %>% distinct(Solución));
+  alternativas= prueba %>% distinct(Solución);
+  resultados$intervalos = alternativas
+  return(resultados)
+}
+```
+
+La usamos con nuestros datos
+
+```{r}
+solucionHurwicz=intervalos.alfa(matriz, favorable = FALSE)
+solucionHurwicz
+```
+Como podemos ver las mejores alternativas cambian según los valores de alpha.
+La alternativa de la Universidad de Córdoba es la mejor para alpha= [0,0.34)
+La alternativa de la Universidad de Sevilla es la mejor para alpha= (0.34,0.87)
+La alternativa de la Universidad de Cádiz es la mejor para alpha= (0.87,1]
+
+Podemos comprobarlo representándola gráficamente con la función 
+dibuja.criterio.Hurwicz.
+```{r}
+dibuja.criterio.Hurwicz(matriz, favorable = FALSE)
+```
