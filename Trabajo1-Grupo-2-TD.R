@@ -251,7 +251,22 @@ dibuja.criterio.Hurwicz(matriz,FALSE) # Comprobamos.
 ### EJEMPLO 1
 
 
-### EJEMPLO 2
+### EJEMPLO 2 (Tamara Carmona)
+# Ejercicio Tamara Carmona Naranjo
+
+#Lucas ha entrado en el Grado de Ciencias del Deporte, pero no sabe en qué 
+#universidad matricularse. Entre sus opciones está: 
+# - La Universidad de Sevilla, donde el precio de la matrícula serían 1200€, el 
+#precio medio de alquiler mensual es de 2000€ y el transporte hasta Sevilla 100€.
+# - La Universidad de Córdoba, donde el precio de la matrícula serían 1800€, el
+#precio medio de alquiler mensual es de 500€ y el transporte hasta Córdoba 500€.
+# - La Universidad de Cádiz, donde el precio de la matrícula serían 2500€, el 
+#precio medio de alquiler mensual es de 150€ y el transporte hasta Cádiz 25€.
+#¿Qué universidad le recomienda usted, si su objetivo es minimizar los costes?
+#Universidad     //Matrícula //Alquiler // Transporte //  
+# Sevilla:      //   1200   // 2000   //  100        // 
+# Córdoba:     //   1800   // 500    //  500        // 
+# Cádiz:      //   2500   // 150    //   25        //   
 
 
 ### EJEMPLO 3
