@@ -129,7 +129,7 @@ Haremos uso de nuestra función para obtener los distintos intervalos del alfa (
 
 ```{r}
 # Función Principal (creada por el grupo)
-intervalos.alfa= function(tablaX,favorable=TRUE) {
+intervalos.alfa = function(tablaX,favorable=TRUE) {
   
   alfa=seq(0,1,by=0.01) # Introducimos un conjunto de alfas que nos servirán
   # para saber cuándo cambia la alternativa óptima. Fijamos un valor de 0.01,
@@ -196,12 +196,13 @@ intervalos.alfa= function(tablaX,favorable=TRUE) {
 }
 ```
 
-La aplicamos a nuestra matriz de datos:
+La aplicamos a nuestra matriz de datos
 
 ```{r}
 solHurwicz = intervalos.alfa(matriz, favorable = T)
 solHurwicz
 
+#Queremos:
 solHurwicz$intervalo
 ```
 
