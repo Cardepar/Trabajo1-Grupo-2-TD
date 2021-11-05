@@ -269,8 +269,19 @@ dibuja.criterio.Hurwicz(matriz,FALSE) # Comprobamos.
 # Cádiz:      //   2500   // 150    //   25        //   
 
 
-### EJEMPLO 3
+### EJEMPLO 3 (Carlos Fernando Moreno León)
 
+# Una persona decide regalarle a su pareja por su cumpleaños un viaje juntos, para el año que viene.
+# Para ello, puede decidir buscar ya mismo el alojamiento, o esperar unos meses. Si lo busca ahora, po-
+# drá encontrar un piso barato más fácilmente. No obstante, si espera unos meses, puede encontrar más
+# opciones de alojamiento, pero, probablemente, más caros. Se plantea, entonces, la siguiente tabla de
+# ganancias:
+
+#              ---------------------------------------------------------------------------
+# ------------|  Más caro de lo esperado  |  Más barato de lo esperado  |   Lo esperado   |
+# Reservar ya |            -75            |             60              |        30       |
+# Esperar     |           -100            |            100              |        10       |
+# ----------------------------------------------------------------------------------------
 
 ### EJEMPLO 4 (José María)
 
