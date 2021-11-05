@@ -14,7 +14,6 @@ source("teoriadecision_funciones_incertidumbre.R")
 library(dplyr)
 ```
 
-
 ## Enunciado del problema
 
 El dueño de una empresa constructora tiene ciertas dudas sobre si debe construir
