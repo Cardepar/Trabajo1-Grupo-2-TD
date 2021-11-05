@@ -1,6 +1,8 @@
 ---
-title: "R Notebook"
-output: html_notebook
+title: "Marina Rivero"
+output:
+  pdf_document: default
+  html_notebook: default
 ---
 
 ```{r setup, include=FALSE}
@@ -43,9 +45,9 @@ Marina está barajando la posibilidad de darse de alta en una plataforma para ve
 
         -   Estado e1:
 
-            -   $x_{1,1}$ `r  20 + 5 = 20 + 5`
+            -   $x_{1,1}$ `r 20 + 5`
 
-            -   $x_{2,1}$ `r 12+10+3.5 = 12+10+3.5`
+            -   $x_{2,1}$ `r 12+10+3.5`
 
             -   $x_{3,1}$ `r 23`
 

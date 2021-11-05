@@ -7,7 +7,7 @@
 # - Tamara Carmona Naranjo
 # - Carlos Fernando Moreno León
 # - José María Girol González
-# -
+# - Marina Rivero Moreno
 
 
 # Funciones Auxiliares
@@ -251,7 +251,22 @@ dibuja.criterio.Hurwicz(matriz,FALSE) # Comprobamos.
 ### EJEMPLO 1
 
 
-### EJEMPLO 2
+### EJEMPLO 2 (Tamara Carmona)
+# Ejercicio Tamara Carmona Naranjo
+
+#Lucas ha entrado en el Grado de Ciencias del Deporte, pero no sabe en qué 
+#universidad matricularse. Entre sus opciones está: 
+# - La Universidad de Sevilla, donde el precio de la matrícula serían 1200€, el 
+#precio medio de alquiler mensual es de 2000€ y el transporte hasta Sevilla 100€.
+# - La Universidad de Córdoba, donde el precio de la matrícula serían 1800€, el
+#precio medio de alquiler mensual es de 500€ y el transporte hasta Córdoba 500€.
+# - La Universidad de Cádiz, donde el precio de la matrícula serían 2500€, el 
+#precio medio de alquiler mensual es de 150€ y el transporte hasta Cádiz 25€.
+#¿Qué universidad le recomienda usted, si su objetivo es minimizar los costes?
+#Universidad     //Matrícula //Alquiler // Transporte //  
+# Sevilla:      //   1200   // 2000   //  100        // 
+# Córdoba:     //   1800   // 500    //  500        // 
+# Cádiz:      //   2500   // 150    //   25        //   
 
 
 ### EJEMPLO 3
@@ -292,3 +307,21 @@ dibuja.criterio.Hurwicz(matriz,FALSE) # Comprobamos.
 
 
 ### EJEMPLO 5
+
+# Marina está barajando la posibilidad de darse de alta en una plataforma para ver
+# series y películas. Para ver cual es la que más se adapta a sus necesidades se 
+# ha informado y ha encontrado la siguiente información:
+#   
+# -	Con la plataforma 1 podría ver todo el contenido que quiera (series, 
+# películas, etc). Esta plataforma tiene un precio de 20€ al mes. Si queremos 
+# añadirle una pantalla más, es decir, poder ver el contenido en dos dispositivos 
+# diferentes al mismo tiempo debemos pagar 5€ más al mes.
+# 
+# -	Con la plataforma 2 tendría acceso a solo a series o películas por 12 euros. 
+# Si queremos tener todo el contenido debería pagar 10€ más cada mes. La 
+# ampliación a dos pantallas cuesta 3,5€ al mes.
+# 
+# -	Con la plataforma 3 dispondríamos de series y películas en dos dispositivos 
+# por 23€ al mes.
+# 
+# ¿Qué le aconsejaría si su objetivo es minimizar los costes?
