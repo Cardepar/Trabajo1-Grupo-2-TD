@@ -14,6 +14,7 @@ source("teoriadecision_funciones_incertidumbre.R")
 library(dplyr)
 ```
 
+
 ## Enunciado del problema
 
 El dueño de una empresa constructora tiene ciertas dudas sobre si debe construir
@@ -197,6 +198,7 @@ La aplicamos a nuestra matriz de datos:
 ```{r}
 solHurwicz = intervalos.alfa(matriz, favorable = T)
 solHurwicz
+solHurwicz$intervalo
 ```
 
 Obtenemos los siguientes valores de Alfa a partir de los cuales cambiamos de alternativa.
