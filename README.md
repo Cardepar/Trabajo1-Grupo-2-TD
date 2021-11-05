@@ -26,7 +26,7 @@ del grupo a unirse como contribuyentes del proyecto, con sus correspondientes
 permisos para que puedan modificar los diferentes scripts.
 
 Más adelante todos los componentes del grupo nos reunimos para obtener
-la función que nos diera la solución de Hurwitz por intervalos de alfa.
+la función que nos diera la solución de Hurwicz por intervalos de alfa.
 Entre todos logramos sacar un primer prototipo de función con la colaboración
 especial de Carlos Fernando. A partir de esa primera función entre todos fuimos
 actualizándola y añadiendo mejoras que hicieran a la función más precisa.

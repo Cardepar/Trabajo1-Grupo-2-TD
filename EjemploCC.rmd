@@ -1,0 +1,178 @@
+---
+title: "Ejemplo Carlos De Castilla"
+author: "Carlos De Castilla"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+source("teoriadecision_funciones_incertidumbre.R")
+library(dplyr)
+```
+
+# Ejercicio Carlos De Castilla Parrilla
+
+## Enunciado del problema
+
+ Unos amigos quieren pasar la noche en el casino y jugarse parte de sus
+ ahorros en alguno de los distintos juegos que se ofrecen en las mesas
+ del salón quieren decidir en cuál es más rentable jugar. 
+ Los distintos juegos son: El Bingo, El Blackjack, El Póker y La Ruleta.
+
+
+## Planteamiento:
+
+-   Un único decisor.
+
+-   Modelo de beneficios (FAVORABLE).
+
+-   Alternativas:
+
+    -   d1 = "Bingo"
+    -   d2 = "Blackjack"
+    -   d3 = "Póker"
+    -   d4 = "Ruleta"
+    
+-   Estados de la Naturaleza:
+
+    -   e1 = "Muy mala suerte"
+    -   e2 = "Mala suerte"
+    -   e3 = "Suerte neutra"
+    -   e4 = "Buena suerte"
+    -   e5 = "Muy buena suerte"
+    
+- A continuación represento la tabla de valores (ganancias en €):
+    Juego: (Suerte) // Muy mala // Mala // Neutra // Buena // Muy Buena //    
+    Bingo:          //   -40    // -30  //   -10  //   10  //     30    //
+    Blackjack:      //   -40    // -20  //   -10  //   20  //     40    //
+    Póker:          //   -120   // -60  //   -30  //   50  //     150   //
+    Ruleta:         //   -140   // -90  //   -10  //   60  //     170   //
+
+## Resolución
+
+Como bien nos dice el enunciado del trabajo, el problema ejemplo que hay crear individualmente tiene que ser resuelto, en primer lugar, empleando todos los métodos de incertidumbre, y despúes resolverlo con la función creada por el grupo en conjunto.
+
+Para probar que todos los métodos funcionan podríamos usar ciertas funciones de la librería de funciones ya creada "[*teoriadecision_funciones_incertidumbre.R*]{.ul}"
+
+
+```{r}
+datos=c(-40,-30,-10,10,30,
+        -40,-20,-10,20,40,
+        -120,-60,-30,50,150,
+        -140,-90,-10,60,170)
+
+matriz=crea.tablaX(datos,4,5)
+matriz
+```
+
+Aplicamos ahora *criterio.Todos* de la librería de funciones anterior, la cual está cargada al inicio de este fichero, supuesto un modelo favorable y para un cierto valor de alpha (usamos la función *criterio.Todos* puesto que es la que nos aplica todos los métodos de incertidumbre en conjunto sin tener que estar tediosamente aplicando los métodos uno a uno.
+
+```{r}
+solTodos = criterio.Todos(tablaX = matriz, alfa = 0.5,favorable = TRUE)
+solTodos
+```
+
+Tenemos por tanto los siguientes resultados:
+
+- Para el criterio Pesimista o de Wald la decisión correcta es Bingo o Blackjack, para el criterio optimista la mejor opción es la Ruleta, para el criterio de Hurwicz, la mejor alternativa sería jugar al Póker o a la Ruleta.
+
+-Aplicando el método de Savage obtenemos que la alternativa de mínimo arrepentimiento sería jugar al Póker. Se jugaría también al Póker si nuestro método fuese el del Punto Ideal.
+
+-Y por último si aplicáramos el criterio de Laplace (sucesos equiprobables) obtendríamos un empate entre las alternativas de jugar a Blackjack, Póker o Ruleta, por lo que se puede deducir que da igual jugar a cualquiera de esos 3 juegos.
+
+
+## Resolución utilizando la función creada por el grupo
+
+Haremos uso de nuestra función para obtener los distintos intervalos del alfa (alfa mide nuestra valentía siendo 0 muy pesimista y 1 muy optimista) en los que cambian las alternativas óptima. siendo el criterio de incertidumbre el método de **Hurwicz**. La función es la siguiente:
+
+```{r}
+# Función Principal (creada por el grupo)
+intervalos.alfa= function(tablaX,favorable=TRUE) {
+  
+  alfa=seq(0,1,by=0.01) # Introducimos un conjunto de alfas que nos servirán
+  # para saber cuándo cambia la alternativa óptima. Fijamos un valor de 0.01,
+  # el cual indica cada cuánto se quiere que exista alfa.
+  X = tablaX
+  
+  if(favorable){ #en el caso de que sea favorable
+    Altmin = apply(X,MARGIN=1,min)
+    Altmax= apply(X,MARGIN=1,max)
+    
+    # Como ya no tenemos un alfa, sino varios, debemos crear un bucle que
+    # trabaje con todos los alfa. Como, además, Altmin y Altmax son vecto-
+    # res, tenemos que crear listas que nos devuelvan, para cada elemento
+    # de dichos vectores, cuáles son las alternativas asociadas a los
+    # alfas.
+    
+    AltH=list()
+    Hurwicz=list()
+    Alt_Hurwicz=list()
+    
+    # Creamos el bucle:
+    
+    for(i in 1:length(alfa)){
+      AltH[[i]] = alfa[i] * Altmax + (1-alfa[i]) * Altmin
+      Hurwicz[[i]] = max(AltH[[i]])
+      Alt_Hurwicz[[i]] = which.max.general(AltH[[i]])
+    }
+    
+    metodo = 'favorable'
+    
+  } else { #en caso de que no sea favorable
+    Altmin = apply(X,MARGIN=1,min)
+    Altmax= apply(X,MARGIN=1,max)
+    
+    AltH=list()
+    Hurwicz=list()
+    Alt_Hurwicz=list()
+    
+    for(i in 1:length(alfa)){
+      AltH[[i]] = (1-alfa[i]) * Altmax + alfa[i] * Altmin 
+      Hurwicz[[i]] = min(AltH[[i]])
+      Alt_Hurwicz[[i]] = which.min.general(AltH[[i]])
+    }
+    
+    metodo = 'desfavorable'
+    
+  }
+  
+  resultados = list();
+  resultados$metodo = metodo;
+  resultados$ValorAlternativa = unlist(Hurwicz); # Valores que toma cada
+  # alfa en su alternativa óptima.
+  resultados$alfa = alfa; # Alfas usados.
+  resultados$AlternativaOptima = unlist(Alt_Hurwicz);
+  resultados$Solucion = unlist(Alt_Hurwicz);
+  names(resultados$Solucion)=alfa;
+  # distinct(as.data.frame(resultados,alfa));
+  prueba=cbind.data.frame(alfa,resultados$Solucion[1:length(alfa)]);
+  colnames(prueba)<-c("Alfa", "Solución");
+  rownames(prueba %>% distinct(Solución));
+  alternativas= prueba %>% distinct(Solución);
+  resultados$intervalos = alternativas
+  return(resultados)
+}
+```
+
+La aplicamos a nuestra matriz de datos:
+
+```{r}
+solHurwicz = intervalos.alfa(matriz, favorable = T)
+solHurwicz
+```
+
+Obtenemos los siguientes valores de Alfa a partir de los cuales cambiamos de alternativa.
+
+Si nuestro alfa va de [0,0.01) la mejor alternativa es el Bingo.
+Si nuestro alfa está entre [0.01,0.44) lo mejor es jugar al Blackjack.
+Si nuestro alfa va de [0.44,0.52) la mejor decisión es jugar al Póker.
+Y si nuestro alfa va de [0.52,1] el mejor plan es jugar a la Ruleta.
+
+Lo podemos comprobar realizando una [representación]{.ul} gráfica mediante la función ***dibuja.criterio.Hurwicz*** de la librería "*teoriadecision_funciones_incertidumbre*":
+
+```{r}
+dibuja.criterio.Hurwicz(matriz, favorable = T)
+```
