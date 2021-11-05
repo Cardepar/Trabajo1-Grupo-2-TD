@@ -10,7 +10,7 @@ Este será nuestro repositorio para el trabajo de TD que tenemos que entregar ha
 - Tamara Carmona Naranjo
 - Carlos Fernando Moreno León
 - José María Girol González
--
+- Marina Rivero Moreno
 
 
 # Enlace al repositorio
