@@ -1,0 +1,161 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+source("teoriadecision_funciones_incertidumbre.R", encoding = "UTF-8")
+library(dplyr)
+```
+
+Marina está barajando la posibilidad de darse de alta en una plataforma para ver series y películas. Para ver cual es la que más se adapta a sus necesidades se ha informado y ha encontrado la siguiente información:
+
+  -	Con la plataforma 1 podría ver todo el contenido que quiera (series, películas, etc). Esta plataforma tiene un precio de 20€ al mes. Si queremos añadirle una pantalla más, es decir, poder ver el contenido en dos dispositivos diferentes al mismo tiempo debemos pagar 5€ más al mes.
+  
+  -	Con la plataforma 2 tendría acceso a solo a series o películas por 12 euros. Si queremos tener todo el contenido debería pagar 10€ más cada mes. La ampliación a dos pantallas cuesta 3,5€ al mes.
+  
+  -	Con la plataforma 3 dispondríamos de series y películas en dos dispositivos por 23€ al mes.
+
+¿Qué le aconsejaría si su objetivo es minimizar los costes?
+
+**Planteamiento**
+
+    -   Un decisor (Marina)
+
+    -   Modelos de costos (desfavorable)
+
+    -   Alternativas:
+
+        -   d1="Plataforma 1"
+
+        -   d2="Plataforma 2"
+
+        -   d3="Plataforma 3"
+
+    -   Estados de la naturaleza:
+
+        -   e1="Series, películas y dos pantallas"
+
+        -   e2="Series y/o películas y una pantallas"
+
+    -   Valoraciones (costos de los dos)
+
+        -   Estado e1:
+
+            -   $x_{1,1}$ `r  20 + 5 = 20 + 5`
+
+            -   $x_{2,1}$ `r 12+10+3.5 = 12+10+3.5`
+
+            -   $x_{3,1}$ `r 23`
+
+        -   Estado e2:
+
+            -   $x_{1,1}$ `r 20`
+
+            -   $x_{2,1}$ `r 12`
+
+            -   $x_{3,1}$ `r 23`
+            
+
+**Resolucion**
+
+Como nos indica el enunciado del trabajo lo primero que tenemos que hacer es crear un enunciado de un problema, para después resolverlo tanto con las funciones dadas en el scrip "teoriadecision_funciones_incertidumbre.R" como la nueva función creada por nosotros.
+
+Creamos la matriz de datos a la que posteriormente aplicaremos todos los métodos que contiene la librería "teoriadecision_funciones_incertidumbre.R"
+```{r}
+tablaX=crea.tablaX(c(25, 20,
+                    25.5, 12,
+                    23, 23), numalternativas = 3, numestados = 2)
+
+```
+
+Aplicamos los métodos
+```{r}
+sol=criterio.Todos(tablaX, alfa = 0.5, favorable = T)
+sol
+```
+La opción de la plataforma 3 es la mejor siguiendo todos los criterios, menos con el optimista, que nos quedaríamos con la plataforma 2
+
+Aplicamos la función que hemos creado
+```{r}
+# Función Principal (creada por el grupo)
+intervalos.alfa= function(tablaX,favorable=TRUE) {
+  
+  alfa=seq(0,1,by=0.01) # Introducimos un conjunto de alfas que nos servirán
+  # para saber cuándo cambia la alternativa óptima. Fijamos un valor de 0.01,
+  # el cual indica cada cuánto se quiere que exista alfa.
+  X = tablaX
+  
+  if(favorable){ #en el caso de que sea favorable
+    Altmin = apply(X,MARGIN=1,min)
+    Altmax= apply(X,MARGIN=1,max)
+    
+    # Como ya no tenemos un alfa, sino varios, debemos crear un bucle que
+    # trabaje con todos los alfa. Como, además, Altmin y Altmax son vecto-
+    # res, tenemos que crear listas que nos devuelvan, para cada elemento
+    # de dichos vectores, cuáles son las alternativas asociadas a los
+    # alfas.
+    
+    AltH=list()
+    Hurwicz=list()
+    Alt_Hurwicz=list()
+    
+    # Creamos el bucle:
+    
+    for(i in 1:length(alfa)){
+      AltH[[i]] = alfa[i] * Altmax + (1-alfa[i]) * Altmin
+      Hurwicz[[i]] = max(AltH[[i]])
+      Alt_Hurwicz[[i]] = which.max.general(AltH[[i]])
+    }
+    
+    metodo = 'favorable'
+    
+  } else { #en caso de que no sea favorable
+    Altmin = apply(X,MARGIN=1,min)
+    Altmax= apply(X,MARGIN=1,max)
+    
+    AltH=list()
+    Hurwicz=list()
+    Alt_Hurwicz=list()
+    
+    for(i in 1:length(alfa)){
+      AltH[[i]] = (1-alfa[i]) * Altmax + alfa[i] * Altmin 
+      Hurwicz[[i]] = min(AltH[[i]])
+      Alt_Hurwicz[[i]] = which.min.general(AltH[[i]])
+    }
+    
+    metodo = 'desfavorable'
+    
+  }
+  
+  resultados = list();
+  resultados$metodo = metodo;
+  resultados$ValorAlternativa = unlist(Hurwicz); # Valores que toma cada
+  # alfa en su alternativa óptima.
+  resultados$alfa = alfa; # Alfas usados.
+  resultados$AlternativaOptima = unlist(Alt_Hurwicz);
+  resultados$Solucion = unlist(Alt_Hurwicz);
+  names(resultados$Solucion)=alfa;
+  # distinct(as.data.frame(resultados,alfa));
+  prueba=cbind.data.frame(alfa,resultados$Solucion[1:length(alfa)]);
+  colnames(prueba)<-c("Alfa", "Solución");
+  rownames(prueba %>% distinct(Solución));
+  alternativas= prueba %>% distinct(Solución);
+  resultados$intervalos = alternativas
+  return(resultados)
+}
+```
+
+
+```{r}
+intervalos.alfa(tablaX,FALSE)
+```
+El resultado nos muestra que si alfa esta entre [0, 0.19) la mejor opción sera la plataforma 3, en cambio si alfa esta entre (0.19 y 1] la mejor opción sera la plataforma 2
+
+Comprobamos estos resultados graficamente
+```{r}
+dibuja.criterio.Hurwicz(tablaX,FALSE) # Comprobamos.
+```
+Vemos que los resultados coinciden con el resultado que nos da la función
+
