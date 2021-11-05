@@ -7,7 +7,7 @@
 # - Tamara Carmona Naranjo
 # - Carlos Fernando Moreno León
 # - José María Girol González
-#  - Marina Rivero Moreno
+# - Marina Rivero Moreno
 
 
 # Funciones Auxiliares
