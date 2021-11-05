@@ -1,8 +1,10 @@
 ---
 title: "Ejemplo José María"
 author: "José María Girol González"
-output: html_document
-editor_options: 
+output:
+  pdf_document: default
+  html_document: default
+editor_options:
   chunk_output_type: console
 ---
 
@@ -12,7 +14,6 @@ source("teoriadecision_funciones_incertidumbre.R")
 library(dplyr)
 ```
 
-# Ejemplo José María
 
 ## Enunciado del problema
 
