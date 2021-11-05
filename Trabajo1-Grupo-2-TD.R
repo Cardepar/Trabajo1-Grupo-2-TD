@@ -248,8 +248,23 @@ dibuja.criterio.Hurwicz(matriz,FALSE) # Comprobamos.
 # Problemas realizados por cada integrante del grupo
 
 
-### EJEMPLO 1
+### EJEMPLO 1 (Carlos De Castilla)
+# Enunciado del problema:
 
+# Unos amigos quieren pasar la noche en el casino y jugarse parte de sus
+# ahorros en alguno de los distintos juegos que se ofrecen en las mesas
+# del salón quieren decidir en cuál es más rentable jugar. 
+# Los distintos juegos son: El Bingo, El Blackjack, El Póker y La Ruleta.
+# Alternativas: d1 = "Bingo", d2 = "Blackjack", d3 = "Póker", d4 = "Ruleta"
+# Estados de la Naturaleza: e1 = "Muy mala suerte", e2 = "Mala suerte",
+# e3 = "Suerte neutra", e4 = "Buena suerte", e5 = "Muy buena suerte"
+# A continuación represento la tabla de valores (ganancias en €):
+#  Juego / (Suerte) // Muy mala // Mala // Neutra // Buena // Muy Buena //    
+#  Bingo:           //   -40    // -30  //   -10  //   10  //     30    //
+#  Blackjack:       //   -40    // -20  //   -10  //   20  //     40    //
+#  Póker:           //   -120   // -60  //   -30  //   50  //     150   //
+#  Ruleta:          //   -140   // -90  //   -10  //   60  //     170   //
+  
 
 ### EJEMPLO 2 (Tamara Carmona)
 # Ejercicio Tamara Carmona Naranjo
