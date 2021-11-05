@@ -16,13 +16,28 @@ library(dplyr)
 
 ## Enunciado del problema
 
-El dueño de una empresa constructora tiene ciertas dudas sobre si debe construir un almacén pequeño, mediano o grande. El tipo de demanda que se puede puede presentar es: baja, media o alta, con probabilidades estimadas de 0.2, 0.5 y 0.3, respectivamente.
+El dueño de una empresa constructora tiene ciertas dudas sobre si debe construir
+un almacén pequeño, mediano o grande. El tipo de demanda que se puede puede 
+presentar es: baja, media o alta, con probabilidades estimadas de 0.2, 0.5 y 
+0.3, respectivamente. Ha de elegir que alternativa es la óptima ya que no le 
+interesaría perder dinero ni mucho menos. Las condiciones son las siguientes:
 
-Instalando un almacén pequeño se esperaría ganar un valor neto de sólo 15000 euros si la demanda es baja. Si el tipo de demanda es medio, se espera que la instalación pequeña gane 70000 euros. Si la demanda es alta, cabría esperar que la instalación pequeña ganara 78000 euros.
+- Instalando un almacén pequeño se esperaría ganar un valor neto de sólo 15000 
+euros si la demanda es baja. Si el tipo de demanda es medio, se espera que la 
+instalación pequeña gane 70000 euros. Si la demanda es alta, cabría esperar que 
+la instalación pequeña ganara 78000 euros.
 
-Con un almacén de tamaño mediano se esperaría una pérdida estimada en 30000 euros si la demanda es baja, y una ganancia de 150000 euros si la demanda es media. Si la demanda es alta, cabría esperar que la instalación de tamaño mediano ganara un valor neto de 170000 euros.
+- Con un almacén de tamaño mediano se esperaría una pérdida estimada en 30000 
+euros si la demanda es baja, y una ganancia de 150000 euros si la demanda es 
+media. Si la demanda es alta, cabría esperar que la instalación de tamaño 
+mediano ganara un valor neto de 170000 euros.
 
-Si el constructor optase por construir un almacén grande y la demanda resultara ser alta, se esperaría que las ganancias ascendieran a 220000 euros. Si la demanda resultara ser de magnitud medio para la instalación grande, se esperaría que el valor fuera igual a 135000 euros; finalmente si la demanda fuera baja, cabría esperar que la instalación perdiera 65000 euros.
+- Si el constructor optase por construir un almacén grande y la demanda 
+resultara ser alta, se esperaría que las ganancias ascendieran a 220000 euros. 
+Si la demanda resultara ser de magnitud medio para la instalación grande, se 
+esperaría que el valor fuera igual a 135000 euros; finalmente si la demanda 
+fuera baja, cabría esperar que la instalación perdiera 65000 euros.
+
 
 ## Planteamiento:
 
@@ -87,7 +102,7 @@ matriz
     
 ```
 
-Aplicamos ahora *criterio.Todos* de la librería de funciones anterior, la cual está cargada al inicio de este fichero, supuesto un modelo faborable y para un cierto valor de alpha (usamos la función *criterio.Todos* puesto que es la que nos aplica todos los métodos de incertidumbre en conjunto sin tener que estar tediosamente aplicando los métodos uno a uno.
+Aplicamos ahora *criterio.Todos* de la librería de funciones anterior, la cual está cargada al inicio de este fichero, supuesto un modelo faborable y para un cierto valor de alpha (usamos la función *criterio.Todos* puesto que es la que nos aplica todos los métodos de incertidumbre en conjunto sin tener que estar aplicando los métodos uno a uno.
 
 ```{r}
 solTodos = criterio.Todos(tablaX = matriz, alfa = 0.3,favorable = TRUE)
@@ -96,9 +111,9 @@ solTodos
 
 Tenemos por tanto los siguientes resultados:
 
-\- Para el criterio *pesimista/Wald* junto con el criterio de *Hurwicz*, la mejor alternativa sería construir un almacén pequeño.
+\- Para el criterio *Pesimista/Wald* junto con el criterio de *Hurwicz*, la mejor alternativa sería construir un almacén pequeño.
 
--Aplicando el método de "*Savage*" obtenemos que la alternativa de mínimo arrepentimiento sería la segunda, es decir, interesa más construir una instalación mediana. Se construiría el mismo almacén si nuestro método sería el del Punto Ideal ya que la segunda alternativa (67268€) es la distancia mínima, luego la más cercana al punto ideal.
+-Aplicando el método de "*Savage*" obtenemos que la alternativa de mínimo arrepentimiento sería la segunda, es decir, interesa más construir una instalación mediana. Se construiría el mismo almacén si nuestro método sería el del "*Punto Ideal*" ya que la segunda alternativa (67268€) es la distancia mínima, luego la más cercana al punto ideal.
 
 -Si aplicáramos el criterio de "*LaPlace*" (sucesos equiprobables) obtendríamos un empate entre la alternativa 2 y la alternativa 3, por lo que se puede deducir que da igual construir tanto un almacén mediano como uno grande (se elegiría uno grande ya que por el mismo precio tenemos una instalación superior y con más espacio).
 
@@ -106,7 +121,7 @@ Tenemos por tanto los siguientes resultados:
 
 ## Resolución utilizando la función creada por el grupo
 
-Haremos uso de nuestra función para obtener los distintos intervalos del alfa (alfa mide nuestra valentía siendo 0 muy pesimista y 1 muy optimista) en los que cambian las alternativas óptima. siendo el criterio de incertidumbre el método de **Hurwicz**. La función es la siguiente:
+Haremos uso de nuestra función para obtener los distintos intervalos del alfa (alfa mide nuestra valentía siendo 0 muy pesimista y 1 muy optimista) en los que cambian las alternativas óptima. siendo el criterio de incertidumbre el método de **HURWICZ**. La función es la siguiente:
 
 ```{r}
 # Función Principal (creada por el grupo)
