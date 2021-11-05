@@ -96,14 +96,14 @@ dibuja.criterio.Hurwicz = function(tablaX,favorable=TRUE) {
 
 
 # Función Principal (creada por el grupo)
-intervalos.alfa= function(tablaX,favorable=TRUE) {
+intervalos.alfa= function(tablaX,p,favorable=TRUE) {
   
-  alfa=seq(0,1,by=0.01) # Introducimos un conjunto de alfas que nos servirán
-  # para saber cuándo cambia la alternativa óptima. Fijamos un valor de 0.01,
-  # el cual indica cada cuánto se quiere que exista alfa.
+  alfa=seq(0,1,by=p) # Introducimos un conjunto de alfas que nos servirán
+  # para saber cuándo cambia la alternativa óptima. A menor p, mayor pre-
+  # cisión.
   X = tablaX
   
-  if(favorable){ #en el caso de que sea favorable
+  if(favorable){
     Altmin = apply(X,MARGIN=1,min)
     Altmax= apply(X,MARGIN=1,max)
     
@@ -127,7 +127,7 @@ intervalos.alfa= function(tablaX,favorable=TRUE) {
     
     metodo = 'favorable'
     
-  } else { #en caso de que no sea favorable
+  } else {
     Altmin = apply(X,MARGIN=1,min)
     Altmax= apply(X,MARGIN=1,max)
     
