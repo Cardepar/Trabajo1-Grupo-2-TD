@@ -170,7 +170,7 @@ datos=c(2160,360,
         3480,480)
 matriz=crea.tablaX(datos,3,2)
 
-intervalos.alfa(matriz,0.01,T)
+intervalos.alfa(matriz,T)
 # Valores de Alfa a partir de los cuales cambiamos de alternativa.
 dibuja.criterio.Hurwicz(matriz,T) # Comprobamos.
 
@@ -181,7 +181,7 @@ datos=c(2160,360,
         3480,480)
 matriz=crea.tablaX(datos,3,2)
 
-intervalos.alfa(matriz,0.1,FALSE)
+intervalos.alfa(matriz,FALSE)
 # Valores de Alfa a partir de los cuales cambiamos de alternativa.
 dibuja.criterio.Hurwicz(matriz,FALSE) # Comprobamos.
 
@@ -212,7 +212,7 @@ datos=c(-40,-30,-10,10,30,
         -140,-90,-10,60,170)
 matriz=crea.tablaX(datos,4,5)
 
-intervalos.alfa(matriz,0.01,T)
+intervalos.alfa(matriz,T)
 # Valores de Alfa a partir de los cuales cambiamos de alternativa.
 # El Alfa mide nuestra valentía siendo 0 muy pesimista y 1 muy optimista.
 # Si nuestro alfa va de [0,0.01) la mejor alternativa es el Bingo.
