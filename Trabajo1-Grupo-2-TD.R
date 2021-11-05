@@ -292,3 +292,21 @@ dibuja.criterio.Hurwicz(matriz,FALSE) # Comprobamos.
 
 
 ### EJEMPLO 5
+
+# Marina está barajando la posibilidad de darse de alta en una plataforma para ver
+# series y películas. Para ver cual es la que más se adapta a sus necesidades se 
+# ha informado y ha encontrado la siguiente información:
+#   
+# -	Con la plataforma 1 podría ver todo el contenido que quiera (series, 
+# películas, etc). Esta plataforma tiene un precio de 20€ al mes. Si queremos 
+# añadirle una pantalla más, es decir, poder ver el contenido en dos dispositivos 
+# diferentes al mismo tiempo debemos pagar 5€ más al mes.
+# 
+# -	Con la plataforma 2 tendría acceso a solo a series o películas por 12 euros. 
+# Si queremos tener todo el contenido debería pagar 10€ más cada mes. La 
+# ampliación a dos pantallas cuesta 3,5€ al mes.
+# 
+# -	Con la plataforma 3 dispondríamos de series y películas en dos dispositivos 
+# por 23€ al mes.
+# 
+# ¿Qué le aconsejaría si su objetivo es minimizar los costes?
