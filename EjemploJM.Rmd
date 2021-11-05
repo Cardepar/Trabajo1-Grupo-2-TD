@@ -104,7 +104,7 @@ matriz
     
 ```
 
-Aplicamos ahora *criterio.Todos* de la librería de funciones anterior, la cual está cargada al inicio de este fichero, supuesto un modelo faborable y para un cierto valor de alpha (usamos la función *criterio.Todos* puesto que es la que nos aplica todos los métodos de incertidumbre en conjunto sin tener que estar aplicando los métodos uno a uno.
+Aplicamos ahora *criterio.Todos* de la librería de funciones anterior, la cual está cargada al inicio de este fichero, supuesto un modelo favorable y para un cierto valor de alpha (usamos la función *criterio.Todos* puesto que es la que nos aplica todos los métodos de incertidumbre en conjunto sin tener que estar aplicando los métodos uno a uno.
 
 ```{r}
 solTodos = criterio.Todos(tablaX = matriz, alfa = 0.3,favorable = TRUE)
@@ -120,8 +120,6 @@ Tenemos por tanto los siguientes resultados:
 -Si aplicáramos el criterio de "*LaPlace*" (sucesos equiprobables) obtendríamos un empate entre la alternativa 2 y la alternativa 3, por lo que se puede deducir que da igual construir tanto un almacén mediano como uno grande (se elegiría uno grande ya que por el mismo precio tenemos una instalación superior y con más espacio).
 
 -Por último, si deseamos resolver nuestro problema aplicando el criterio *Optimista*, la opción óptima sería la tercera, es decir, implantaríamos un almacén de tamaño grande.
-
-¿Qué decisión deberá tomar el constructor para maximizar sus beneficios?
 
 ## Resolución utilizando la función creada por el grupo
 
