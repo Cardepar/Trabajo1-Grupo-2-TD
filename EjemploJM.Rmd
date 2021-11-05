@@ -120,6 +120,8 @@ Tenemos por tanto los siguientes resultados:
 
 -Por último, si deseamos resolver nuestro problema aplicando el criterio *Optimista*, la opción óptima sería la tercera, es decir, implantaríamos un almacén de tamaño grande.
 
+¿Qué decisión deberá tomar el constructor para maximizar sus beneficios?
+
 ## Resolución utilizando la función creada por el grupo
 
 Haremos uso de nuestra función para obtener los distintos intervalos del alfa (alfa mide nuestra valentía siendo 0 muy pesimista y 1 muy optimista) en los que cambian las alternativas óptima. siendo el criterio de incertidumbre el método de **HURWICZ**. La función es la siguiente:
@@ -198,6 +200,7 @@ La aplicamos a nuestra matriz de datos:
 ```{r}
 solHurwicz = intervalos.alfa(matriz, favorable = T)
 solHurwicz
+
 solHurwicz$intervalo
 ```
 
