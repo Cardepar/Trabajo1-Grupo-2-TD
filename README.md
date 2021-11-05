@@ -33,5 +33,11 @@ actualizándola y añadiendo mejoras que hicieran a la función más precisa.
 Cuando ya vimos que conseguimos una función bastante adecuada comenzamos
 con las tareas individuales.
 
-Cada componente planteó su propio problema de incertidumbre y puso en marcha
-la función que habíamos creado anteriormente.
+Cada componente planteó su propio problema de incertidumbre y le aplicó, por un
+lado, todos los criterios, además del de Hurwicz, para descubrir cuál era la
+alternativa óptima ofrecida por dicho método de incertidumbre. 
+
+Por otro lado, una vez realizado lo anterior, cada uno puso en marcha la función
+que habíamos creado conjuntamente para comprobar que la solución óptima
+resultante se ajustaba correctamente a la representación del método de Hurwicz 
+del final del fichero.
