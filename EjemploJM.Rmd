@@ -39,6 +39,7 @@ Si la demanda resultara ser de magnitud medio para la instalación grande, se
 esperaría que el valor fuera igual a 135000 euros; finalmente si la demanda 
 fuera baja, cabría esperar que la instalación perdiera 65000 euros.
 
+¿Qué decisión tendría que tomar el constructor para maximizar sus beneficios?
 
 ## Planteamiento:
 
