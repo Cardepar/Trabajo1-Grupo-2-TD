@@ -1,7 +1,7 @@
 
-# Trabajo1-Grupo-2-TD
+# TRABAJO1-GRUPO-2-TD
 
-# La lista de componentes del grupo
+# Lista de componentes del grupo
 
 # - Carlos De Castilla Parrilla (Responsble)
 # - Tamara Carmona Naranjo
@@ -9,10 +9,14 @@
 # - José María Girol González
 # -
 
-library(dplyr)
 
 # Funciones Auxiliares
+source("teoriadecision_funciones_incertidumbre.R") #estraídas de aquí
 
+library(dplyr)
+
+
+## Introducir nuestra matriz de valores:
 crea.tablaX = function(vector_matporfilas,numalternativas=3,numestados=4) {
   
   X = matrix(vector_matporfilas,nrow=numalternativas,ncol=numestados,byrow=TRUE)
@@ -22,7 +26,7 @@ crea.tablaX = function(vector_matporfilas,numalternativas=3,numestados=4) {
   
 }
 
-
+## Devolver el máximo de un vector:
 which.max.general = function(vector) {
   maximo = max(vector);
   res = which(vector == maximo);
@@ -30,7 +34,7 @@ which.max.general = function(vector) {
   
 }
 
-
+## Devolver el mínimo de un vector
 which.min.general = function(vector) {
   minimo = min(vector);
   res = which(vector == minimo);
@@ -38,7 +42,7 @@ which.min.general = function(vector) {
   
 }
 
-
+## Representar gráficamente el método de Hurwicz
 dibuja.criterio.Hurwicz = function(tablaX,favorable=TRUE) {
   X = tablaX;
   Altmin = apply(X,MARGIN=1,min);
@@ -94,8 +98,62 @@ dibuja.criterio.Hurwicz = function(tablaX,favorable=TRUE) {
 }
 
 
+## Aplicar todos los métodos de incertidumbre:
+criterio.Todos = function(tablaX,alfa=0.3,favorable=TRUE) {
+  
+  cri01 = criterio.Wald(tablaX,favorable);
+  cri02 = criterio.Optimista(tablaX,favorable);
+  cri03 = criterio.Hurwicz(tablaX,alfa,favorable);
+  cri04 = criterio.Savage(tablaX,favorable);
+  cri05 = criterio.Laplace(tablaX,favorable);
+  cri06 = criterio.PuntoIdeal(tablaX,favorable);
+  
+  numestados = ncol(tablaX)
+  numalterna = nrow(tablaX)
+  
+  resultado = cbind(tablaX,cri01$ValorAlternativas,cri02$ValorAlternativas,
+                    cri03$ValorAlternativas,cri04$ValorAlternativas,
+                    cri05$ValorAlternativas,cri06$ValorAlternativas);
+  
+  decopt = c(rep(NA,numestados),cri01$AlternativaOptima[1],
+             cri02$AlternativaOptima[1],cri03$AlternativaOptima[1],
+             cri04$AlternativaOptima[1],cri05$AlternativaOptima[1],
+             cri06$AlternativaOptima[1]);
+  
+  resultado = rbind(resultado,decopt);
+  
+  colnames(resultado)[numestados+1] = cri01$criterio;
+  colnames(resultado)[numestados+2] = cri02$criterio;
+  colnames(resultado)[numestados+3] = cri03$criterio;
+  colnames(resultado)[numestados+4] = cri04$criterio;
+  colnames(resultado)[numestados+5] = cri05$criterio;
+  colnames(resultado)[numestados+6] = cri06$criterio;
+  
+  if (favorable) {
+    rownames(resultado)[numalterna+1] = 'iAlt.Opt (fav.)';
+  } else {
+    rownames(resultado)[numalterna+1] = 'iAlt.Opt (Desfav.)';
+  }
+  
+  ## nuevo
+  resultado = as.data.frame(resultado)
+  resultado = format(resultado,digits=4)
+  decopt = c(rep('--',numestados),
+             paste0(names(cri01$AlternativaOptima),collapse = ","),
+             paste0(names(cri02$AlternativaOptima),collapse = ","),
+             paste0(names(cri03$AlternativaOptima),collapse = ","),
+             paste0(names(cri04$AlternativaOptima),collapse = ","),
+             paste0(names(cri05$AlternativaOptima),collapse = ","),
+             paste0(names(cri06$AlternativaOptima),collapse = ","));
+  resultado[nrow(resultado),] = decopt
+  ## fin nuevo
+  
+  return(resultado)
+  
+}
 
-# Función Principal (creada por el grupo)
+
+# Función Principal creada por el grupo:
 intervalos.alfa= function(tablaX,favorable=TRUE) {
   
   alfa=seq(0,1,by=0.01) # Introducimos un conjunto de alfas que nos servirán
@@ -184,3 +242,53 @@ matriz=crea.tablaX(datos,3,2)
 intervalos.alfa(matriz,FALSE)
 # Valores de Alfa a partir de los cuales cambiamos de alternativa.
 dibuja.criterio.Hurwicz(matriz,FALSE) # Comprobamos.
+
+
+
+# Problemas realizados por cada integrante del grupo
+
+
+### EJEMPLO 1
+
+
+### EJEMPLO 2
+
+
+### EJEMPLO 3
+
+
+### EJEMPLO 4 (José María)
+
+# El dueño de una empresa constructora tiene ciertas dudas sobre si debe 
+# construir un almacén pequeño, mediano o grande. El tipo de demanda que se 
+# puede presentar es: baja, media o alta, con probabilidades estimadas de 0.2, 
+# 0.5 y 0.3, respectivamente. Ha de elegir que alternativa es la óptima ya que 
+# no le interesaría perder dinero ni mucho menos. Las condiciones son las 
+# siguientes:
+# 
+# - Instalando un almacén pequeño se esperaría ganar un valor neto de sólo 15000 
+# euros si la demanda es baja. Si el tipo de demanda es medio, se espera que la 
+# instalación pequeña gane 70000 euros. Si la demanda es alta, cabría esperar 
+# que la instalación pequeña ganara 78000 euros. 
+# 
+# - Con un almacén de tamaño mediano se esperaría una pérdida estimada en 30000 
+# euros si la demanda es baja, y una ganancia de 150000 euros si la demanda es 
+# media. Si la demanda es alta, cabría esperar que la instalación de tamaño 
+# mediano ganara un valor neto de 170000 euros.
+# 
+# - Si el constructor optase por construir un almacén grande y la demanda 
+# resultara ser alta, se esperaría que las ganancias ascendieran a 220000 euros. 
+# Si la demanda resultara ser de magnitud medio para la instalación grande, se 
+# esperaría que el valor fuera igual a 135000 euros; finalmente si la demanda 
+# fuera baja, cabría esperar que la instalación perdiera 65000 euros.
+
+# Luego tenemos la siguiente tabla de valores del problema:
+#   
+# ALT. \\ ESTADOS | DEMANDA BAJA | DEMANDA MEDIA | DEMANDA ALTA |
+# ---------------------------------------------------------------
+# ALMACÉN PEQUEÑO |     15000    |      70000    |      78000   |
+# ALMACÉN MEDIANO |    -30000    |     150000    |     170000   |
+# ALMACÉN GRANDE  |    -65000    |     135000    |     220000   |
+
+
+### EJEMPLO 5
