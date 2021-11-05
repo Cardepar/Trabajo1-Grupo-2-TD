@@ -202,7 +202,7 @@ La aplicamos a nuestra matriz de datos
 solHurwicz = intervalos.alfa(matriz, favorable = T)
 solHurwicz
 
-#Queremos:
+# Queremos:
 solHurwicz$intervalo
 ```
 
